@@ -1,0 +1,65 @@
+Background
+    PayRoll is a web app, designed much like CS50 Finance, that helps managers keep track of employee payroll. Employees, when 
+    hired, are required to register for an account on the website. When logged in, they can enter the total amount of hours they
+    worked and the wage in which they worked for. As the manager of Harvard Bartending Services, this app would be instrumental in 
+    reducing my workload and the workload of future managers. It would replace the current, archaic system in which the manager has
+    to keep track of the irregular hours and inconsistent wages of employees with excel files.
+
+Running PayRoll
+    PayRoll is run very similarly to CS50 Finance. Flask's built-in web server is started with "flask run". phpLiteAdmin can be
+    started with "phpliteadmin finance.db". The website is easily navigatable as the tabs are self explanatory. The "hours" tab
+    is used to enter shift information while the "clear all" tab is used to delete shifts.
+
+application.py
+    This file is configured to store sessions to the local filesystem. It also configures an SQLite database, finance.db, to be used
+    with CS50's SQL module. Application.py's many routes are used to configure the pages and the uses of the web app.
+    
+    index()
+        Index() displays an HTML table for the current user showing the date that the user worked, the number of hours worked that
+        day, the wage for those hours, the total amount of money made during that shift and the total amount of money they have
+        earned so far during the current payroll cycle. If the user is the manager, then the index shows shows each employee, hours
+        worked for each, total amount owed to each and amount owed in total to all employees.
+    hours()
+        Hours() allows the user to enter the number of hours they worked on a shift and the agreed wage for that shift. A value must
+        be inputted into each blank. Non-integer values are allowed, non-numeric values are not allowed. They are also required to
+        enter the date which they worked. The total amount of hours from all shifts they have worked is calculated. This data is 
+        then stored. The manager can also track their own hours.
+    login()
+        Login() requires the user to login with correct credentials. Blank values are not allowed. These credentials are up to the
+        user and are decided during register().
+    logout()
+        Logout() allows users to logout of their account to protect their information.
+    register()
+        Register() allows users to create an account. They must choose a username that is not taken already. In addition, they must
+        create a password and confirm it as an added measure of user friendliness. Blank values are not allowed.
+    clear()
+        Clear() is used to delete shifts. The "Clear All" button is used at the end of every payroll cycle to set the account 
+        balance and hours worked back down to zero. It also deletes the shifts from the current payroll. If the user is the manager,
+        the clear button sets the hours and amount owed to each employee back to zero and deletes all shifts from all employees. 
+        Employees can select a certain shift to delete by entering the date of the shift in the format that the date was inputted in.
+    history()
+        History() keeps a record of all shifts ever worked by the user. This is useful as a personal record for the employee. Also,
+        it comes in handy when double-checking actual deposits and when reporting taxes.
+        
+
+Static/
+    Static contains a css (cascading style sheet) file used to format HTML pages.
+
+Templates/
+    Includes many html files each displayed when rendered.
+
+helpers.py
+    login_required()
+        Decorate routes to require a login.
+
+finance.db
+    users
+        Keeps track of user's login credentials including username, hashed password and a unique user id determined by the system.
+        It also stores how much money is owed to the user and how many hours the user has worked.
+    hours
+        Keeps track of each shift for each user. This includes the date of the shift, the hours worked during that shift, the wage, 
+        the total amount made from the shift and the unique user id. The shifts are displayed on the index page. Shift information 
+        is deleted from this table after every payroll cycle.
+    history
+        Keeps track of the same information as the hours table. Shift information is stored here indefinitely and appears in the 
+        users history.

@@ -1,0 +1,58 @@
+application.py
+    This file is configured to store sessions to the local filesystem. It also configures an SQLite database, finance.db, to be used
+    with CS50's SQL module. Application.py's many routes are used to configure the pages and the uses of the web app.
+    
+    index()
+        The manager always has a user id of 1 since they always make the first account. For all other employees, the index only
+        shows the shift information for the logged in user as to maintain privacy.
+    hours()
+        Hours() is unique due to the nature of the job. As bartenders, event times fluctuate frequently -- it all depends on the 
+        customer. Employees can enter half hours and quarter hours in their shift information due to this. Wages for different
+        events also fluctuate. Late-night and last-minute events are difficult for the manager to staff so the pay for those 
+        shifts are usually bumped. The manager keeps mental track of these pay bumps, but it would so much more efficient for
+        employees to keep track of this information. Many students have questionable ethics so suspicious totals will be inspected
+        by the manager. There is no specific structure for entering the date. This is because the date of the event is for the 
+        convenience of the employee to keep track of (the manager has a separate scheduling website to reference). The total amount
+        of hours and money earned is calculated for the convenience of both the manager and the employees.
+    login()
+        Correct credentials are required to preserve the security of the accounts.
+    logout()
+        Logout() allows users to logout of their account to protect their information.
+    register()
+        In practice, the username would be chosen by the manager and all usernames would follow a firstname.lastname format so that 
+        employees are easily identifiable. Passwords are hashed before they are stored to furthur increase security.  
+    clear()
+        Payroll usually operates on a biweekly cycle at Harvard Bartending Services. After payroll, shifts are deleted and reset 
+        to prepare for the next cycle. The clear button is most useful to employees who entered in shift information incorrectly.
+        They can enter the date of the shift and the shift will be deleted from both the hours table and the history table, their
+        total hours and total earned cash will also decrease accordingly. The manager can reset the shift information for all users
+        and they can also adjust their own shifts.
+    history()
+        History displays information from all shifts from all payrolls.
+        
+        
+Static/
+    The css ensures a consistent HTML format which makes the website look more professional.
+
+Templates/
+    Includes many html files each displayed when rendered.
+
+helpers.py
+    login_required()
+        Does not allow user to enter information unless they are logged in.
+
+finance.db
+    users
+        username   TEXT                            Can be combination of numeric and alphabetical values
+        password   TEXT                            Can be combination of numeric and alphabetical values
+        id         INTEGER   PRIMARY KEY: Yes      Unique id for each user
+        cash       NUMERIC   DEFAULT VALUE: 0      Cash can have decimal values
+        hours      NUMERIC   DEFAULT VALUE: 0      Hours can have decimal values
+    hours 
+        date       TEXT                            Date can be entered however the user wants
+        hours      NUMERIC                         Hours can have decimal values
+        wage       NUMERIC                         Wage can have decimal values
+        user       INTEGER                         Unique id generated when user registers
+        total      NUMERIC                         Total earned money can have decimal values
+    history
+        Same as hours table

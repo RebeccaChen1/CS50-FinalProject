@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+<title>{% block title %} Hours {% endblock %}</title>
+
+{% block main %}
+
+    <table>
+        <thead>
+            <th>
+                Date                    
+            </th>
+            <th>
+                Hours Worked 
+            </th>
+            <th>
+                Wage
+            </th>
+            <th>
+                Total
+            </th>
+        </thead>
+        <tb>
+            {% for row in hours %}
+            <tr>
+                <td>
+                    {{ row.date }}
+                </td>
+                <td>
+                    {{ row.hours }}
+                </td>
+                <td>
+                    {{ row.wage }}
+                </td>
+                <td>
+                    {{ row.total }}
+                </td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <b>{{Total}}</b>
+                </td>
+            </tr>
+        </tb>
+
+    </table>
+
+{% endblock %}
